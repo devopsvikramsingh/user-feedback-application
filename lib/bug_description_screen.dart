@@ -69,8 +69,9 @@ class _BugDescriptionScreenState extends State<BugDescriptionScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: goToMediaScreen,
-                child: const Text("Next (Attach Media)"),
+                child: const Text("Next "),
               ),
+              
             ],
           ),
         ),
