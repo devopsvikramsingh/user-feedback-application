@@ -59,12 +59,12 @@ class _BugDescriptionScreenState extends State<BugDescriptionScreen> {
               TextFormField(
                 controller: bugCtrl,
                 decoration: const InputDecoration(
-                  labelText: "Bug Description",
+                  labelText: "Feedback Description",
                   border: OutlineInputBorder(),
                 ),
                 maxLines: 5,
                 validator: (value) =>
-                    value!.isEmpty ? "Enter bug description" : null,
+                    value!.isEmpty ? "Enter feedback description" : null,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
