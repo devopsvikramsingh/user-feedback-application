@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'user_detail_screen.dart';
 
 class GoogleLoginScreen extends StatefulWidget {
+  const GoogleLoginScreen({super.key});
+
   @override
   _GoogleLoginScreenState createState() => _GoogleLoginScreenState();
 }
@@ -68,7 +70,7 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Google Sign-In Web"), centerTitle: true),
+      appBar: AppBar(title: Text("Google Sign-In"), centerTitle: true),
       body: Center(
         child: _isSigningIn
             ? CircularProgressIndicator()

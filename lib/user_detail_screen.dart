@@ -1,8 +1,8 @@
 import 'package:app_22/userlistscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'bug_description_screen.dart';
-// New screen to view all data
 
 class UserDetailsScreen extends StatefulWidget {
   const UserDetailsScreen({super.key});
@@ -17,7 +17,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   final emailCtrl = TextEditingController();
   final contactCtrl = TextEditingController();
 
-  Box? usersBox; // Declare as nullable
+  Box? usersBox;
 
   @override
   void initState() {
@@ -26,9 +26,8 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   }
 
   Future<void> openUsersBox() async {
-    // Open Hive box asynchronously
     usersBox = await Hive.openBox('users');
-    setState(() {}); // Refresh UI after box is ready
+    setState(() {}); // Refresh after box is ready
   }
 
   @override
@@ -47,10 +46,9 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
         'contact': contactCtrl.text,
       };
 
-      usersBox!.add(user); // Save user temporarily
+      usersBox!.add(user);
       print("All users: ${usersBox!.values.toList()}");
 
-      // Navigate to BugDescriptionScreen
       Navigator.push(
         context,
         MaterialPageRoute(builder: (_) => BugDescriptionScreen(userData: user)),
@@ -61,7 +59,6 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     if (usersBox == null) {
-      // Show loading until box is ready
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     }
 
@@ -74,23 +71,56 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Name field
               TextFormField(
                 controller: nameCtrl,
                 decoration: const InputDecoration(labelText: "Name"),
                 validator: (value) => value!.isEmpty ? "Enter name" : null,
               ),
               const SizedBox(height: 10),
+
+              // Email field with validation
               TextFormField(
                 controller: emailCtrl,
                 decoration: const InputDecoration(labelText: "Email"),
-                validator: (value) => value!.isEmpty ? "Enter email" : null,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(60), // block after 60 chars
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter email";
+                  }
+                  // Email regex check
+                  final emailRegex = RegExp(
+                    r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                  );
+                  if (!emailRegex.hasMatch(value)) {
+                    return "Enter a valid email (e.g. example@gmail.com)";
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 10),
+
+              // Contact field with 10-digit restriction
               TextFormField(
                 controller: contactCtrl,
                 decoration: const InputDecoration(labelText: "Contact"),
-                validator: (value) => value!.isEmpty ? "Enter contact" : null,
+                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  LengthLimitingTextInputFormatter(10), // only 10 digits
+                  FilteringTextInputFormatter.digitsOnly, // only numbers
+                ],
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Enter contact";
+                  } else if (value.length != 10) {
+                    return "Contact must be exactly 10 digits";
+                  }
+                  return null;
+                },
               ),
+
               const SizedBox(height: 20),
               ElevatedButton(onPressed: saveUser, child: const Text("Next")),
               const SizedBox(height: 10),
@@ -101,7 +131,7 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
                     MaterialPageRoute(builder: (_) => const UserListScreen()),
                   );
                 },
-                child: const Text(" view your reviews"),
+                child: const Text("View your reviews"),
               ),
             ],
           ),
