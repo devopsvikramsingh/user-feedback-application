@@ -1,8 +1,5 @@
 user feedback application
 
- User Feedback Application
-
-
 The **User Feedback Application** is a modern mobile app built using **Flutter** and **Dart**, designed to collect and manage user feedback effortlessly.
 It integrates **Firebase Authentication** for secure Google sign-in and uses the **Hive database** for temporary local storage.
 
