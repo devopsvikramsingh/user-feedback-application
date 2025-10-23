@@ -7,13 +7,6 @@ The app guides users through an intuitive flow: login → fill personal details 
 
 ---
 
-## 🎥 Demo
-
-🎬 **App Demo:**
-[▶️ Click to Watch](https://github.com/yourusername/user-feedback-app-demo.mp4)
-*(Upload your demo video to GitHub or link to YouTube)*
-
----
 
 ## 🌟 Features
 
