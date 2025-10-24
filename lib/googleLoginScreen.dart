@@ -84,8 +84,13 @@ class _GoogleLoginScreenState extends State<GoogleLoginScreen> {
   /// Sign-in button UI
   Widget _buildSignInButton() {
     return ElevatedButton.icon(
-      //icon: Image.asset('assets/logo.png', height: 24, width: 24),
-      label: Text("Sign in "),
+      icon: Image.asset('assets/logo.png', height: 50, width: 100),
+      //Image(image: AssetImage('assets/logo.png'),)
+      label: Text("Sign in ",
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
+      ),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
